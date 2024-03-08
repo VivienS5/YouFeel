@@ -1,6 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import json
+from bs4 import BeautifulSoup
 
 # Clé d'API YouTube
 api_key = "AIzaSyDBz0WcoEWF048aGMdBJ2x83TqNtchYri0"
@@ -9,10 +10,10 @@ api_key = "AIzaSyDBz0WcoEWF048aGMdBJ2x83TqNtchYri0"
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 # Identifiant de la vidéo YouTube
-video_id = "-udMxs4qDB8"
+video_id = "JdFRjsEZrmU"
 
 # Nombre de commentaires à récupérer
-max_results = 20
+max_results = 100
 
 comments_data = {}
 
@@ -30,14 +31,15 @@ try:
         author = snippet["authorDisplayName"]
         text = snippet["textDisplay"]
         # Nettoyer le commentaire
-        cleaned_text = text.encode('ascii', 'ignore').decode('utf-8')
+        cleaned_text = BeautifulSoup(text, "html.parser").get_text()
+        cleaned_text = cleaned_text.encode('ascii', 'ignore').decode('utf-8')
         if author in comments_data:
             comments_data[author].append(cleaned_text)
         else:
             comments_data[author] = [cleaned_text]
 
     # Enregistrer les données dans un fichier JSON
-    with open("comments.json", "w", encoding='utf-8') as json_file:
+    with open("./dataset/comments.json", "w", encoding='utf-8') as json_file:
         json.dump(comments_data, json_file, indent=4, ensure_ascii=False)
     print("Les commentaires ont été enregistrés dans le fichier 'comments.json'.")
 
