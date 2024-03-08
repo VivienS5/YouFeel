@@ -50,7 +50,7 @@ def index():
         if video_id:
             comments_data = get_video_comments(video_id[0])
             if comments_data:
-                with open("../../dataset/comments.json", "w", encoding='utf-8') as json_file:
+                with open("./dataset/comments.json", "w", encoding='utf-8') as json_file:
                     json.dump(comments_data, json_file, indent=4, ensure_ascii=False)
                 return redirect('/comments')
             else:
@@ -61,7 +61,7 @@ def index():
 
 @app.route('/comments')
 def comments():
-    comments = load_comments_from_json("../../dataset/comments.json")
+    comments = load_comments_from_json("./dataset/comments.json")
     return render_template('comments.html', comments=comments)
 
 def load_comments_from_json(file_path):
