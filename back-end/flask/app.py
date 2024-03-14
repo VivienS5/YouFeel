@@ -4,11 +4,12 @@ from googleapiclient.errors import HttpError
 import json
 from bs4 import BeautifulSoup
 import re
+from apiKey import secretApiKey
 
 app = Flask(__name__)
 
 # Clé d'API YouTube
-api_key = "AIzaSyDBz0WcoEWF048aGMdBJ2x83TqNtchYri0"
+api_key = secretApiKey
 
 # Créer un objet service YouTube
 youtube = build('youtube', 'v3', developerKey=api_key)

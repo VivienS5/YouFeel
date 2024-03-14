@@ -1,3 +1,5 @@
 .venv
 YouFeelEnv/
 back-end/flask/__pycache__/
+back-end/apiKey.py
+dataset/comments.json
