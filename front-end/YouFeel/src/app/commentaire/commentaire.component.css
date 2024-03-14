@@ -7,22 +7,26 @@
 .container-card{
     height: 20vh;
     text-align: center;
-    margin-top: 200px;
-    
+    margin-top:50px;
 }
 img{
-height: 75px;}
-
+    height: 75px;
+}
 
 .container-tab{
   padding-bottom: 10%;
 }
 
-.on-item{
-  cursor: pointer;
-}
 
-.on-item-avis{
+.avis-positif, .avis-negatif {
   cursor: pointer;
   margin-left: 15px;
+}
+
+.avis-positif:hover{
+  color: blue;
+}
+
+.avis-negatif:hover{
+  color: red;
 }

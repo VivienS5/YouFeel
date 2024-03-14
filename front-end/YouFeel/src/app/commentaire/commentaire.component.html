@@ -20,7 +20,7 @@
         <!-- Colonne ID -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
-          <td mat-cell *matCellDef="let element" class="on-item">
+          <td mat-cell *matCellDef="let element">
             {{ element.id }}
           </td>
         </ng-container>
@@ -30,7 +30,7 @@
           <th mat-header-cell *matHeaderCellDef style="width: 400px">
             Commentaire
           </th>
-          <td mat-cell *matCellDef="let element" class="on-item">
+          <td mat-cell *matCellDef="let element">
             {{ element.commentaire }}
           </td>
         </ng-container>
@@ -40,7 +40,7 @@
           <th mat-header-cell *matHeaderCellDef>Sentiment</th>
           <td mat-cell *matCellDef="let element">
             <!-- Utilisation des icônes mat-icon pour afficher le sentiment -->
-            <mat-icon class="on-item">{{
+            <mat-icon>{{
               getSentimentIcon(element.sentiment)
             }}</mat-icon>
           </td>
@@ -52,8 +52,8 @@
             Avis
           </th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon class="on-item-avis">thumb_up</mat-icon>
-            <mat-icon class="on-item-avis">thumb_down</mat-icon>
+            <mat-icon class="avis-positif">thumb_up</mat-icon>
+            <mat-icon class="avis-negatif">thumb_down</mat-icon>
           </td>
         </ng-container>
 
