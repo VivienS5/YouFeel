@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Comments</title>
+</head>
+<body>
+    <h1>Entrer un lien YouTube :</h1>
+    <form method="POST">
+        <input type="text" name="youtube_link" placeholder="Entrez le lien YouTube">
+        <button type="submit">Obtenir les commentaires</button>
+    </form>
+    {% if comments %}
+        <h2>Commentaires :</h2>
+        <ul>
+            {% for author, comments_list in comments.items() %}
+                <li>{{ author }}</li>
+                <ul>
+                    {% for comment in comments_list %}
+                        <li>{{ comment }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
