@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarmenuComponent {
   redirectToAPI() {
-    this.router.navigate(['/commentaire']);
+    this.router.navigate(['/api']);
   }
   redirectToMock() {
     throw new Error('Method not implemented.');

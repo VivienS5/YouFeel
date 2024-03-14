@@ -1,0 +1,35 @@
+<div class="center-content">
+  <!-- Tout le contenu de votre page ici -->
+  <div class="container">
+    <div class="container-card">
+      <mat-card>
+        <mat-card-content>
+          <h2>YouFeel</h2>
+          <p>Devinez l’emotion de vos vidéos !</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="container-tab">
+      <!-- Tableau mat-table -->
+      <mat-card>
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <mat-label>Url video</mat-label>
+            <input
+              matInput
+              placeholder="Ex. Pizza"
+              value="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D"
+            />
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="center-content">
+      <button mat-raised-button color="primary" (click)="redirectToComment()">
+        Lancer le traitements des donnees
+      </button>
+    </div>
+  </div>
+</div>
