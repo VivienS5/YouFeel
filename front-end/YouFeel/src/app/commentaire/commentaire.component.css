@@ -5,12 +5,15 @@
   }
 
 .container-card{
-    height: 20vh;
     text-align: center;
-    margin-top:50px;
+    margin-top:20px;
+    margin-bottom: 20px;
 }
-img{
-    height: 75px;
+.miniature{
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 .container-tab{
