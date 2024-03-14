@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidebarmenuComponent } from './sidebarmenu/sidebarmenu.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss',
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    MatSidenavModule,
+    SidebarmenuComponent,
+  ],
 })
 export class AppComponent {
   title = 'YouFeel';
