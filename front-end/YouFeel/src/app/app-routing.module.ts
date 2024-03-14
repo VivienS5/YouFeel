@@ -4,13 +4,13 @@ import { CommentaireComponent } from './commentaire/commentaire.component';
 
 const routes: Routes = [
   { path: 'commentaire', component: CommentaireComponent },
-  { path: '*', redirectTo: 'commentaire', pathMatch: 'full' },
+  { path: '', redirectTo: 'commentaire', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
 
-export { routes };  
+export { routes };

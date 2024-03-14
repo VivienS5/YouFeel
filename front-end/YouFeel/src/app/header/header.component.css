@@ -1,0 +1,9 @@
+.mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-icon {
+    display: flex;
+    gap: 32px;
+}
