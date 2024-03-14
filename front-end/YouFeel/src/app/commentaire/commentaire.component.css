@@ -1,0 +1,24 @@
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.container-card{
+    height: 20vh;
+    text-align: center;
+    margin-top: 200px;
+}
+
+.container-tab{
+  padding-bottom: 10%;
+}
+
+.on-item{
+  cursor: pointer;
+}
+
+.on-item-avis{
+  cursor: pointer;
+  margin-left: 15px;
+}
