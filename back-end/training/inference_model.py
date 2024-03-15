@@ -77,6 +77,6 @@ def inference(texts):
 text = ["i miss all the others as well that feel that i wronged them and they will soon understand that i didnt",
         " i feel like i am a burden to everyone and i am not worth anything",
         "i am so happy today i feel like i am on top of the world",
-        "i am happy to be here"]
+        "",]
 init()
 inference(texts=text[3])
