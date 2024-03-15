@@ -6,3 +6,5 @@ dataset/comments.json
 .vscode/
 __pycache__/
 front-end/YouFeel/*
+back-end/flask/apiKey.py
+# faire fichier apiKey.py dans le dossier back-end/flask avec secretApiKey = "VotreKeyYoutube" 

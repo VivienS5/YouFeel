@@ -6,14 +6,13 @@ import tensorflow as tf
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-
 from nltk.stem import WordNetLemmatizer
 import nltk
+import csv
 
 nb_words = 100000
 
 def custom_standardization(input_data):
-    
     lowercase = tf.strings.lower(input_data)
     lowercase_string = lowercase.numpy().decode('utf-8')
     lowercase_string = re.sub(r'[^\w\s]', '', lowercase_string)
@@ -21,9 +20,9 @@ def custom_standardization(input_data):
     stop_word = " ".join([word for word in lowercase_string.split() if word not in stop_word])
     lemamatized_text = lemmatize_text(stop_word)
     stripped_html = tf.strings.regex_replace(lemamatized_text, '<br />', ' ')
-    result =  tf.strings.regex_replace(stripped_html,
-                                '[%s]' % re.escape(string.punctuation),
-                                '')
+    result = tf.strings.regex_replace(stripped_html,
+                                      '[%s]' % re.escape(string.punctuation),
+                                      '')
     return result.numpy().decode('utf-8')
 def init():
     nltk.download('stopwords')
@@ -74,13 +73,17 @@ def inference(texts):
     predictions = model.predict(phrase_vector)
     print(predictions)
     # Do something with the predictions
-    labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise']  # replace with your actual labels
-    highest_prediction = np.argmax(predictions[0])
-    print(labels[highest_prediction])
+    highest_prediction = np.argmax(predictions)
+    return highest_prediction
+    # Do something with the predictions
     
-text = ["i miss all the others as well that feel that i wronged them and they will soon understand that i didnt",
-        " i feel like i am a burden to everyone and i am not worth anything",
-        "i am so happy today i feel like i am on top of the world",
-        "i am happy to be here"]
+labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise'] 
+
 init()
-inference(texts=text[3])
+
+# Charger le fichier CSV
+with open('./dataset/comments.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        d = inference(texts=row[0])
+        print(f"Texte : {row[0]} -- Prédiction : {d} -- Émotion : {labels[d]}")
