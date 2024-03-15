@@ -33,3 +33,36 @@
 .avis-negatif:hover{
   color: red;
 }
+
+.container-modal-icones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+}
+
+.container-modal-icones .custom-icon {
+  margin: 0 15px;
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.dialog-content-container {
+  text-align: center;
+}
+
+.dialog-actions {
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container-modal-icones .custom-icon {
+    font-size: 40px; 
+    width: 40px;
+    height: 40px;
+  }
+}
