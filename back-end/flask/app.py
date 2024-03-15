@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import json
+import csv
 from bs4 import BeautifulSoup
 import re
 from apiKey import secretApiKey
@@ -51,8 +51,12 @@ def index():
         if video_id:
             comments_data = get_video_comments(video_id[0])
             if comments_data:
-                with open("./dataset/comments.json", "w", encoding='utf-8') as json_file:
-                    json.dump(comments_data, json_file, indent=4, ensure_ascii=False)
+                with open("./dataset/comments.csv", "w", newline='', encoding='utf-8') as csv_file:
+                    csv_writer = csv.writer(csv_file)
+                    csv_writer.writerow(['User', 'Comment'])
+                    for user, comments in comments_data.items():
+                        for comment in comments:
+                            csv_writer.writerow([user, comment])
                 return redirect('/comments')
             else:
                 return "Erreur lors de la récupération des commentaires."
@@ -62,13 +66,17 @@ def index():
 
 @app.route('/comments')
 def comments():
-    comments = load_comments_from_json("./dataset/comments.json")
+    comments = load_comments_from_csv("./dataset/comments.csv")  # Charger les commentaires depuis le fichier CSV
     return render_template('comments.html', comments=comments)
 
-def load_comments_from_json(file_path):
-    with open(file_path, 'r', encoding='utf-8') as json_file:
-        comments_data = json.load(json_file)
-    return comments_data
+def load_comments_from_csv(file_path):
+    comments = []
+    with open(file_path, 'r', newline='', encoding='utf-8') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)  # Ignorer la première ligne (entêtes)
+        for row in csv_reader:
+            comments.append({'User': row[0], 'Comment': row[1]})
+    return comments
 
 if __name__ == '__main__':
     app.run(debug=True)

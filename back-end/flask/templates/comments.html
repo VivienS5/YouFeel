@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments</title>
 </head>
 <body>
-    <h1>Commentaires</h1>
-    <ul>
-        {% for author, comments_list in comments.items() %}
-            {% for comment in comments_list %}
-                <li>{{ author }}: {{ comment }}</li>
-            {% endfor %}
+    <h1>Comments</h1>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Comment</th>
+        </tr>
+        {% for comment in comments %}
+        <tr>
+            <td>{{ comment['User'] }}</td>
+            <td>{{ comment['Comment'] }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 </body>
 </html>
