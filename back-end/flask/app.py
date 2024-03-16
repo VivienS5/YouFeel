@@ -4,6 +4,8 @@ from googleapiclient.errors import HttpError
 from bs4 import BeautifulSoup
 import re
 from apiKey import secretApiKey
+import subprocess
+import csv
 
 app = Flask(__name__)
 
@@ -48,28 +50,33 @@ def index():
             comments_data = get_video_comments(video_id[0])
             if comments_data:
                 with open("./dataset/comments.csv", "w", encoding='utf-8') as csv_file:
-                    csv_file.write("username,commentaire\n")
                     for comment in comments_data:
                         csv_file.write(f"{comment['username']},{comment['commentaire']}\n")
-                return redirect('/comments')
+                return redirect('/traitement')
             else:
                 return "Erreur lors de la récupération des commentaires."
         else:
             return "URL YouTube invalide."
     return render_template('index.html')
 
+@app.route('/traitement')
+def traitement():
+    subprocess.run(['python', './back-end/training/inference_model.py'])  
+    return redirect('/comments')
+
 @app.route('/comments')
 def comments():
-    comments = load_comments_from_csv("./dataset/comments.csv")
+    comments = load_comments_from_csv("./dataset/comments_with_emotions.csv")
     return render_template('comments.html', comments=comments)
 
 def load_comments_from_csv(file_path):
     comments_data = []
     with open(file_path, 'r', encoding='utf-8') as csv_file:
-        next(csv_file)
-        for line in csv_file:
-            username, commentaire = line.strip().split(",", 1)
-            comments_data.append({"username": username, "commentaire": commentaire})
+        reader = csv.reader(csv_file)
+        next(reader) 
+        for row in reader:
+            username, commentaire, emotion = row
+            comments_data.append({"username": username, "commentaire": commentaire, "emotion": emotion})
     return comments_data
 
 if __name__ == '__main__':

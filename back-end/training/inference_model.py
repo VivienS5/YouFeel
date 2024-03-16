@@ -82,8 +82,12 @@ labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise']
 init()
 
 # Charger le fichier CSV
-with open('./dataset/comments.csv', newline='') as csvfile:
+with open('./dataset/comments.csv', newline='', encoding="utf-8") as csvfile:
     reader = csv.reader(csvfile)
-    for row in reader:
-        d = inference(texts=row[0])
-        print(f"Texte : {row[0]} -- Prédiction : {d} -- Émotion : {labels[d]}")
+    with open('./dataset/comments_with_emotions.csv', 'w', newline='', encoding='utf-8') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(["username", "commentaire", "emotion\n"])
+        for row in reader:
+            d = inference(texts=row[1])
+            writer.writerow([row[0], row[1], labels[d]])
+            print(f"Texte : {row[1]} -- Prédiction : {d} -- Émotion : {labels[d]}")
