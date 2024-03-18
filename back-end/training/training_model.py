@@ -1,4 +1,5 @@
 
+import os
 import pickle
 import string
 from matplotlib import pyplot as plt
@@ -14,24 +15,30 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from sklearn.preprocessing import LabelEncoder
 
 from tqdm import tqdm
+import argparse
 
 
 class ModelTraining():
     path_dataset = "./dataset/emotions.csv"
     path_comments_dataset = "./dataset/comments.csv"
-    nb_words = 100000
-    seq_lenght = 250
-    epochs = 10
-    embedding_dim  = 32
-    def __init__(self) -> None:
+    path_model = "./back-end/training/models/model_weights.weights.h5"
+    def __init__(self,nb_words = 100000,epoch = 10, embedding_dim = 32,comments_training = False) -> None:
+        self.nb_words = nb_words
+        self.epochs = epoch
+        self.embedding_dim = embedding_dim
+        self.comments_training = comments_training
+        if os.path.isfile(self.path_model) == False:
+            self.comments_training = False
         tqdm.pandas()
         np.set_printoptions(precision=3, suppress=True)
+
+    def __call__(self) -> bool:
         self.loadDataset()
         self.preProcess()
-        self.train()
+        return self.train()
+        
     def loadDataset(self):
         """Load the emotion and comments dataset.
 
@@ -39,11 +46,17 @@ class ModelTraining():
             bool: True if the dataset is loaded successfully, False otherwise.
         """
         print("=== Loading dataset ===")
-        self.data_emotions = pds.read_csv(self.path_dataset,sep=",",nrows=self.nb_words )
-        self.data_emotions.drop('Unnamed: 0', axis=1, inplace=True)
-        self.data_text = self.data_emotions['text']
+        if self.comments_training == True:
+            data_comments = pds.read_csv(self.path_comments_dataset,sep=",",nrows=self.nb_words,quotechar='"' )
+            self.data_text = data_comments['text']
+            self.data_label = data_comments['label']
+            pass
+        else :
+            data_emotions = pds.read_csv(self.path_dataset,sep=",",nrows=self.nb_words )
+            data_emotions.drop('Unnamed: 0', axis=1, inplace=True)
+            self.data_text = data_emotions['text']
+            self.data_label = data_emotions['label']
         
-        self.data_label = self.data_emotions['label']
 
     def custom_standardization(self,input_data):
         
@@ -66,7 +79,8 @@ class ModelTraining():
         return lemmatized_output
     
     def preProcess(self):
-        self.data_text = pds.Series(self.data_text).apply(self.custom_standardization)
+        print("=== Preprocessing ===")
+        self.data_text = pds.Series(self.data_text).progress_apply(self.custom_standardization)
         print(self.data_text.head())
         self.tokenizer = Tokenizer(num_words=self.nb_words, oov_token="<OOV>")
         self.tokenizer.fit_on_texts(self.data_text)
@@ -84,24 +98,33 @@ class ModelTraining():
             tf.keras.layers.Dense(64,activation='relu'),
             tf.keras.layers.Dense(32,activation='relu'),
             tf.keras.layers.Dense(6,activation='softmax')
-            ])      
+            ])
+        model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+                        optimizer=tf.optimizers.Adam(),metrics=['accuracy'])
         return model
     def train(self):
         print("=== Training ===")
-        youFeelModel = self.youFeelModel()
-        
-        youFeelModel.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                        optimizer=tf.optimizers.Adam(),metrics=['accuracy'])
+        if os.path.exists(self.path_model) and self.comments_training == True:
+            youFeelModel = self.youFeelModel()
+            youFeelModel.load_weights(self.path_model)
+            youFeelModel.build((None, self.nb_words))
+            pass
+        else:  
+            youFeelModel = self.youFeelModel()
         sequences_train, sequences_val, labels_train, labels_val = train_test_split(
         self.padded_sequences, self.data_label, test_size=0.2, random_state=42)
-        history = youFeelModel.fit(sequences_train, labels_train, 
+        try:
+            history = youFeelModel.fit(sequences_train, labels_train, 
                                epochs=self.epochs, 
                                validation_data=(sequences_val, labels_val))        
-        with open('./back-end/training/models/tokenizer.pickle', 'wb') as handle:
-            pickle.dump(self.tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        youFeelModel.save_weights('./back-end/training/models/model_weights.weights.h5')
-        self.plot_history(history)
-        pass
+            with open('./back-end/training/models/tokenizer.pickle', 'wb') as handle:
+                pickle.dump(self.tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            youFeelModel.save_weights('./back-end/training/models/model_weights.weights.h5')
+            self.plot_history(history)
+        except Exception as e:
+            print(e)
+            return False
+        return True
     def plot_history(self,history):
             # Plot training & validation accuracy values
         plt.figure()
@@ -123,4 +146,21 @@ class ModelTraining():
         plt.legend(['Train', 'Validation'], loc='upper left')
         plt.show()
         pass
+    pass
+if __name__ == "__main__":
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+    parser = argparse.ArgumentParser()
+    parser.add_argument_group("Training model")
+    parser.add_argument("--inference",type=str,default="",help="Text to predict")
+    parser.add_argument("--nb_words",type=int,default=100000)
+    parser.add_argument("--epoch",type=int,default=10)
+    parser.add_argument("--embedding_dim",type=int,default=32)
+    parser.add_argument("--comments_training",type=bool,default=False)
+    args = parser.parse_args()
+    try:
+        tf.get_logger().setLevel('ERROR')
+        arg = ModelTraining(nb_words=args.nb_words, epoch=args.epoch, embedding_dim=args.embedding_dim, comments_training=args.comments_training)
+        print(arg())
+    except KeyboardInterrupt:
+        print("Interrupted")
     pass

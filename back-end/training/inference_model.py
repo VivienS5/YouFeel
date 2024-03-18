@@ -42,8 +42,6 @@ def create_model():
             tf.keras.layers.Dense(32,activation='relu'),
             tf.keras.layers.Dense(6,activation='softmax')
             ])
-    # model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-    #             optimizer=tf.optimizers.Adam(),metrics=['accuracy'])
     model.build((None, nb_words))
     
     return model
@@ -53,9 +51,6 @@ def inference(texts):
 
     # Load the weights
     model =create_model()
-    # model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-    #             optimizer=tf.optimizers.Adam(),metrics=['accuracy'])
-
     model.build((None, nb_words))
     model.load_weights('./back-end/training/models/model_weights.weights.h5')
     if model is None:
@@ -72,15 +67,16 @@ def inference(texts):
 
     # Predict the output
     predictions = model.predict(phrase_vector)
+    predictions = [round(prediction, 3) for prediction in predictions[0]]
     print(predictions)
     # Do something with the predictions
     labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise']  # replace with your actual labels
-    highest_prediction = np.argmax(predictions[0])
+    highest_prediction = np.argmax(predictions)
     print(labels[highest_prediction])
     
 text = ["i miss all the others as well that feel that i wronged them and they will soon understand that i didnt",
         " i feel like i am a burden to everyone and i am not worth anything",
         "i am so happy today i feel like i am on top of the world",
-        "i am happy to be here"]
+        "",]
 init()
 inference(texts=text[3])

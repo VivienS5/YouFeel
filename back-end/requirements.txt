@@ -4,6 +4,7 @@ google-auth-oauthlib
 Flask
 beautifulsoup4
 tensorflow
+tensorflow-gpu
 scikit-learn
 numpy
 pandas
