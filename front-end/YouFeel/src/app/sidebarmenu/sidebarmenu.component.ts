@@ -15,7 +15,7 @@ export class SidebarmenuComponent {
     this.router.navigate(['/api']);
   }
   redirectToMock() {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['/mock']);
   }
   constructor(private router: Router) {}
 }
