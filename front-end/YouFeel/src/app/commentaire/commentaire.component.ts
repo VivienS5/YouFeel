@@ -43,7 +43,7 @@ const ELEMENT_DATA: commentaireElement[] = [
   {id: 23, commentaire: "Je suis assez déçu.", sentiment: "angry"},
   {id: 24, commentaire: "Je suis ravi !", sentiment: "angry"},
   {id: 25, commentaire: "Je ne suis pas très satisfait...", sentiment: "angry"},
-  {id: 26, commentaire: "Je suis comblé de bonheur !", sentiment: "content"},
+  {id: 26, commentaire: "Je suis comblé de bonheur !", sentiment: "joy"},
   {id: 27, commentaire: "C'est assez déprimant...", sentiment: "angry"},
   {id: 28, commentaire: "Je suis super content !", sentiment: "angry"},
   {id: 29, commentaire: "Je suis plutôt déçu.", sentiment: "angry"},
@@ -93,7 +93,6 @@ export class CommentaireComponent implements AfterViewInit {
     });
   }
   
-
   closeDialog(): void {
     this.dialog.closeAll();
   }
@@ -101,17 +100,17 @@ export class CommentaireComponent implements AfterViewInit {
   getSentimentIcon(sentiment: string): string {
     switch (sentiment) {
       case 'sad':
-        return 'sentiment_very_dissatisfied';
+        return 'sentiment_sad';
       case 'joy':
         return 'sentiment_very_satisfied';
       case 'love':
-        return 'favorite';
+        return 'volunteer_activism';
       case 'angry':
-        return 'whatshot';
+        return 'sentiment_extremely_dissatisfied';
       case 'fear':
-        return 'sentiment_dissatisfied';
-      case 'surprise':
         return 'mood_bad';
+      case 'surprise':
+        return 'sentiment_very_dissatisfied';
       default:
         return '';
     }
