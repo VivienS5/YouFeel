@@ -4,6 +4,20 @@
     align-items: center;
   }
 
+  .container-card .material-symbols-outlined{
+    margin: 0 15px;
+    font-size: 60px;
+    width: 60px;
+    height:60px;
+  }
+
+  .container-tab .material-symbols-outlined{
+    margin: 0 15px;
+    font-size: 30px;
+    width: 30px;
+    height:30px;
+  }
+
 .container-card{
     text-align: center;
     margin-top:20px;
@@ -43,7 +57,7 @@
   height: auto;
 }
 
-.container-modal-icones .custom-icon {
+.container-modal-icones .material-symbols-outlined {
   margin: 0 15px;
   font-size: 50px;
   width: 50px;
@@ -53,16 +67,4 @@
 
 .dialog-content-container {
   text-align: center;
-}
-
-.dialog-actions {
-  justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .container-modal-icones .custom-icon {
-    font-size: 40px; 
-    width: 40px;
-    height: 40px;
-  }
 }
