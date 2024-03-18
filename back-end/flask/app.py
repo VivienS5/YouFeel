@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, jsonify
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from bs4 import BeautifulSoup
@@ -6,6 +6,7 @@ import re
 from apiKey import secretApiKey
 import os
 import csv
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -78,6 +79,18 @@ def load_comments_from_csv(file_path):
             username, commentaire, emotion = row
             comments_data.append({"username": username, "commentaire": commentaire, "emotion": emotion})
     return comments_data
+
+@app.route('/comments/json')
+def comments_json():
+    # Lecture du fichier CSV
+    df = pd.read_csv('./dataset/comments_with_emotions.csv')
+
+    # Conversion du DataFrame en JSON
+    data = df.to_dict(orient='records')
+
+    # Retour du JSON
+    return jsonify(data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

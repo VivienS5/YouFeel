@@ -87,7 +87,7 @@ with open('./dataset/comments.csv', newline='', encoding="utf-8") as csvfile:
     reader = csv.reader(csvfile)
     with open('./dataset/comments_with_emotions.csv', 'w', newline='', encoding='utf-8') as output_file:
         writer = csv.writer(output_file)
-        writer.writerow(["username", "commentaire", "emotion\n"])
+        writer.writerow(["username", "commentaire", "emotion"])
         for row in reader:
             d = inference(texts=row[1])
             writer.writerow([row[0], row[1], labels[d]])

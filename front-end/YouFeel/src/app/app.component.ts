@@ -3,6 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidebarmenuComponent } from './sidebarmenu/sidebarmenu.component';
+import { RecupBackModule } from './recup-back/recup-back.module';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,8 @@ import { SidebarmenuComponent } from './sidebarmenu/sidebarmenu.component';
     HeaderComponent,
     MatSidenavModule,
     SidebarmenuComponent,
+    RecupBackModule,
+    FormsModule,
   ],
 })
 export class AppComponent {
