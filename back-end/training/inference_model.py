@@ -35,14 +35,15 @@ def lemmatize_text(text):
 embedding_dim  = 32
 def create_model():
     model = tf.keras.Sequential([
-            tf.keras.layers.Embedding(input_dim = nb_words,output_dim= embedding_dim),
+            tf.keras.layers.Embedding(input_dim=nb_words, output_dim=embedding_dim),
             tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(128)),
-            tf.keras.layers.Dense(64,activation='relu'),
-            tf.keras.layers.Dense(32,activation='relu'),
-            tf.keras.layers.Dense(6,activation='softmax')
+            tf.keras.layers.Dense(64, activation='relu'),
+            tf.keras.layers.Dense(32, activation='relu'),
+            tf.keras.layers.Dense(6, activation='softmax')
             ])
-    # model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-    #             optimizer=tf.optimizers.Adam(),metrics=['accuracy'])
+    model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+                  optimizer=tf.optimizers.Adam(),
+                  metrics=['accuracy'])
     model.build((None, nb_words))
     
     return model

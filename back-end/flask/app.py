@@ -4,7 +4,7 @@ from googleapiclient.errors import HttpError
 from bs4 import BeautifulSoup
 import re
 from apiKey import secretApiKey
-import subprocess
+import os
 import csv
 
 app = Flask(__name__)
@@ -61,7 +61,7 @@ def index():
 
 @app.route('/traitement')
 def traitement():
-    subprocess.run(['python', './back-end/training/inference_model.py'])  
+    os.system('python ./back-end/training/inference_model.py') 
     return redirect('/comments')
 
 @app.route('/comments')
