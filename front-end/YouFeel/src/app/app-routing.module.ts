@@ -7,7 +7,7 @@ import { MockComponent } from './mock/mock.component';
 const routes: Routes = [
   { path: 'commentaire', component: CommentaireComponent },
   { path: 'api', component: ApiComponent },
-  { path: 'api', component: MockComponent },
+  { path: 'mock', component: MockComponent },
   { path: '', redirectTo: 'api', pathMatch: 'full' },
 ];
 
