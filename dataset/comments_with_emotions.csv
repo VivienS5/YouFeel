@@ -1,20 +1,16 @@
 username,commentaire,emotion
-@SomethingRandomChannel,thanks so much for this video series Sentdex,sadness
-@luizhenriquedefreitasassis2051,That was really good. Congratulations man!,joy
-@camao4938,hi,joy
-@jigglymonkey4317,are these new images stored in the same folder as the training images? im confused on that since there wasn't a change to the directory,sadness
-@jaewooko4527,Could you advise how to adjust code for more than two categories..  I am working on electronic circuit analysis to classify range of symbols such as diode,sadness
-@jaewooko4527,Thanks a lot.. I was trying recent tensorflowlite..  Your tut helped to start over from basic and detail. All sample files are working great!,sadness
-@pritomroy2465,Learning Tensorflow and Python in 2022 😅,sadness
-@rajatvardam2787,1 million subscribers and only 2.6k likes... this is odd... such a useful tutorial this one is....,love
-@SalehAbod8,"Thanks for the great tutorial.I would suggest replacing '""int"" with ""round"" in the last part:print(CATEGORIES[int(prediction[0][0])]) >>>> print(CATEGORIES[round(prediction[0][0])])Since round will produce dog for prediction <0.5 and cat for >=0.5",sadness
-@cynthiac2174,OpenCV(4.1.2) /io/opencv/modules/imgproc/src/resize.cpp:3720: error: (-215:Assertion failed) !ssize.empty() in function 'resize'please help,anger
-@kevcritc,This is great. I was following the tensor flow tutorial and then I was like great,joy
-@drygordspellweaver8761,when you're reshaping an RGB image REMEMBER THE '3'!,sadness
-@chaosmaker781,Hi I have a very annoying error: the reshape changed and it just accepts 2 inputs now… How to correct it?,joy
-@chaosmaker781,Hi I have a very annoying error: the reshape changed and it just accepts 2 inputs now… How to correct it?,joy
-@h4dri664,You are the best,joy
-@hieutvm5627,how can I use this model for object detection ?,sadness
-@hobbitthegobbit,You are the life saver man and a great lecturer,joy
-@eranfeit,Hi,joy
-This is a Python tutorial that walks through, for detecting objects in images and real time video.,sadness
+@kassor_flowter,Last Epoch !,joy
+@BiloxTv31,Super interwieu ❤,joy
+@donyzi,Zerator étonné que l'Élysée fasse des streams alors que c'est lui l'égérie 😂💀,anger
+@MrKevindu06,Dead by daylight ❤,sadness
+@joffrey00_off,Zera il parlait de qui ? Pour le fail des oscars cetait pas de niro nan ? Jai trouvé le fail pour Lalaland et Moonlight mais cest pas de ça quil parlait nan ?,anger
+@wTfLo75012,"17:02 ""Le retour de CS:GO"" Mais ils sont réellement streamers de jeux vidéos pour dire ça ? C'est certainement l'un des jeux les plus joué et les plus suivi au monde",anger
+@shinra9746,A quand les joueurs du grenier chez pop corn ? 🎉,sadness
+@clementzarka3390,SA ARRIVE FORT OE OE j'aime se :D,joy
+@gordonmoilamain3541,Ça sent bon la censure et le retournement de vestes. A quand la redif des JO streamer .,anger
+@tomhd6099,1,anger
+@opticmadara,Comme l'impression que ça delete des coms qui parle d'un certain sujet if you know what i mean,sadness
+@Kraasmi,Je ne connaissais pas l'émission Popcorn,joy
+@m.bourdelas,Cnest forcément la cgt ptdr,sadness
+@kartoons1965,MDR donc a 1:35 y'a vraiment la réponse a la question suivante et personne sur le plateau avait capter?!,joy
+@evomantis4132,6 comm / 4 bots XD,sadness

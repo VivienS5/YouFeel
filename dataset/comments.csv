@@ -1,27 +1,15 @@
-
-@SomethingRandomChannel,thanks so much for this video series Sentdex, I know I'm late to the game but I noticed that you don't normalize the numbers when you make a prediction request. However, when we trained the model we did normalize before handing over the data to fit. I tried normalizing the data before making a prediction and I got rubbish results, when i took the normalization out it worked fine. Why is it that we train on normalized numbers but don't prepare our prediction request data in the same way?
-@luizhenriquedefreitasassis2051,That was really good. Congratulations man!
-@camao4938,hi, thank you so much for these videos, really help me out!
-@jigglymonkey4317,are these new images stored in the same folder as the training images? im confused on that since there wasn't a change to the directory
-@jaewooko4527,Could you advise how to adjust code for more than two categories..  I am working on electronic circuit analysis to classify range of symbols such as diode, capacitor and resistor. Thank a lot.
-@jaewooko4527,Thanks a lot.. I was trying recent tensorflowlite..  Your tut helped to start over from basic and detail. All sample files are working great!
-@pritomroy2465,Learning Tensorflow and Python in 2022 😅
-@rajatvardam2787,1 million subscribers and only 2.6k likes... this is odd... such a useful tutorial this one is....
-@SalehAbod8,Thanks for the great tutorial.I would suggest replacing '"int" with "round" in the last part:print(CATEGORIES[int(prediction[0][0])]) >>>> print(CATEGORIES[round(prediction[0][0])])Since round will produce dog for prediction <0.5 and cat for >=0.5
-@cynthiac2174,OpenCV(4.1.2) /io/opencv/modules/imgproc/src/resize.cpp:3720: error: (-215:Assertion failed) !ssize.empty() in function 'resize'please help
-@kevcritc,This is great. I was following the tensor flow tutorial and then I was like great, how do I apply this ??? Your tutorial has solved this basic question.
-@drygordspellweaver8761,when you're reshaping an RGB image REMEMBER THE '3'!
-@chaosmaker781,Hi I have a very annoying error: the reshape changed and it just accepts 2 inputs now… How to correct it?
-@chaosmaker781,Hi I have a very annoying error: the reshape changed and it just accepts 2 inputs now… How to correct it?
-@h4dri664,You are the best
-@hieutvm5627,how can I use this model for object detection ?
-@hobbitthegobbit,You are the life saver man and a great lecturer
-@eranfeit,Hi,
-This is a Python tutorial that walks through, for detecting objects in images and real time video.
-This tutorial is based on TensorFlow and pre-trained model
- The link for the video : https://youtu.be/40_NC2Ahs_8
- I also shared the Python code in the video description .
- Enjoy
- Eran
-@sylus121,Bookmark
-@matancadeporco,i'm wondering if is there a way to calculate the time spent on a trained model? already trained them but i didnt pay attention on the time spent... now i need to know the time spent, should i retrain all of them again?
+@kassor_flowter,Last Epoch !
+@BiloxTv31,Super interwieu ❤
+@donyzi,Zerator étonné que l'Élysée fasse des streams alors que c'est lui l'égérie 😂💀
+@MrKevindu06,Dead by daylight ❤
+@joffrey00_off,Zera il parlait de qui ? Pour le fail des oscars cetait pas de niro nan ? Jai trouvé le fail pour Lalaland et Moonlight mais cest pas de ça quil parlait nan ?
+@wTfLo75012,17:02 "Le retour de CS:GO" Mais ils sont réellement streamers de jeux vidéos pour dire ça ? C'est certainement l'un des jeux les plus joué et les plus suivi au monde, et ce, depuis plus de 10 ans.
+@shinra9746,A quand les joueurs du grenier chez pop corn ? 🎉
+@clementzarka3390,"SA ARRIVE FORT OE OE" j'aime se :D
+@gordonmoilamain3541,Ça sent bon la censure et le retournement de vestes. A quand la redif des JO streamer .
+@tomhd6099,1,2 milliards c'est plus proche que 970 millions non ?
+@opticmadara,Comme l'impression que ça delete des coms qui parle d'un certain sujet if you know what i mean
+@Kraasmi,Je ne connaissais pas l'émission Popcorn, ni Domingo. Franchement, J'ADORE ! J'ai regardé PAR HASARD l'émission sur Twitch du début à la fin, j'ai l'impression que l'émission avait durer 30 minutes tellement que j'ai trop aimer ! Je serais là à toutes les émissions ! :D Je me suis abonné à cette chaîne + celles de Domingo et aux 2 Insta. C'est incroyable ! Je vais me REMATTER ce STREAM GAME, même si j'l'ai déjà vu xD D'ailleurs j'ai presque vu TOUTES les vidéos sur les mini-jeux et débats sur cette chaîne... J'les ai mangés. (Pro Chômeur ICI...)PS : INCROYABLE ta prestation à DALSI !! Je n'étais pas là EN LIVE, je l'ai regardé en VOD, tu as géré frérot !! Prochain PRIME j'essaierais d'être là, EN LIVE.
+@m.bourdelas,Cnest forcément la cgt ptdr, c'est autant honteux que l'arrivée du gouvernement sur twitch
+@kartoons1965,MDR donc a 1:35 y'a vraiment la réponse a la question suivante et personne sur le plateau avait capter?!
+@evomantis4132,6 comm / 4 bots XD
