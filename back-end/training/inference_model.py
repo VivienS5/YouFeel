@@ -78,5 +78,5 @@ text = ["i miss all the others as well that feel that i wronged them and they wi
         " i feel like i am a burden to everyone and i am not worth anything",
         "i am so happy today i feel like i am on top of the world",
         "",]
-init()
-inference(texts=text[3])
+# init()
+# inference(texts=text[3])
