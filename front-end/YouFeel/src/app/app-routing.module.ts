@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ApiComponent } from './api/api.component';
+import { RecupBackComponent } from './recup-back/recup-back.component';
 import { MockComponent } from './mock/mock.component';
+
 
 const routes: Routes = [
   { path: 'commentaire', component: CommentaireComponent },
   { path: 'api', component: ApiComponent },
+  { path: 'recupback', component: RecupBackComponent },
   { path: 'mock', component: MockComponent },
   { path: '', redirectTo: 'api', pathMatch: 'full' },
 ];

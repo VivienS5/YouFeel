@@ -6,13 +6,24 @@
     <title>Comments</title>
 </head>
 <body>
-    <h1>Commentaires</h1>
-    <ul>
-        {% for author, comments_list in comments.items() %}
-            {% for comment in comments_list %}
-                <li>{{ author }}: {{ comment }}</li>
+    <h1>Comments</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Commentaire</th>
+                <th>Émotion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.username }}</td>
+                <td>{{ comment.commentaire }}</td>
+                <td>{{ comment.emotion }}</td>
+            </tr>
             {% endfor %}
-        {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 </body>
 </html>

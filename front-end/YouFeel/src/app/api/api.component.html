@@ -9,6 +9,7 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <form (ngSubmit) = "onSubmit()" action = "http://127.0.0.1:5000/upload" method = "post" enctype="multipart/form-data">  
 
     <div class="container-tab">
       <!-- Tableau mat-table -->
@@ -16,20 +17,20 @@
         <mat-card-content>
           <mat-form-field class="example-full-width">
             <mat-label>Url video</mat-label>
-            <input
-              matInput
-              placeholder="Ex. Pizza"
-              value="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D"
-            />
+            
+              <input matInput placeholder="Lien Youtube" type="text" name="youtube_link"/>
+             
           </mat-form-field>
         </mat-card-content>
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
       </mat-card>
     </div>
 
     <div class="center-content">
-      <button mat-raised-button color="primary" (click)="redirectToComment()">
-        Lancer le traitements des donnees
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+        Lancer le traitement des données
       </button>
     </div>
+  </form> 
   </div>
 </div>

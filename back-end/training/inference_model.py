@@ -6,14 +6,13 @@ import tensorflow as tf
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-
 from nltk.stem import WordNetLemmatizer
 import nltk
+import csv
 
 nb_words = 100000
 
 def custom_standardization(input_data):
-    
     lowercase = tf.strings.lower(input_data)
     lowercase_string = lowercase.numpy().decode('utf-8')
     lowercase_string = re.sub(r'[^\w\s]', '', lowercase_string)
@@ -21,9 +20,9 @@ def custom_standardization(input_data):
     stop_word = " ".join([word for word in lowercase_string.split() if word not in stop_word])
     lemamatized_text = lemmatize_text(stop_word)
     stripped_html = tf.strings.regex_replace(lemamatized_text, '<br />', ' ')
-    result =  tf.strings.regex_replace(stripped_html,
-                                '[%s]' % re.escape(string.punctuation),
-                                '')
+    result = tf.strings.regex_replace(stripped_html,
+                                      '[%s]' % re.escape(string.punctuation),
+                                      '')
     return result.numpy().decode('utf-8')
 def init():
     nltk.download('stopwords')
@@ -36,12 +35,17 @@ def lemmatize_text(text):
 embedding_dim  = 32
 def create_model():
     model = tf.keras.Sequential([
-            tf.keras.layers.Embedding(input_dim = nb_words,output_dim= embedding_dim),
+            tf.keras.layers.Embedding(input_dim=nb_words, output_dim=embedding_dim),
             tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(128)),
-            tf.keras.layers.Dense(64,activation='relu'),
-            tf.keras.layers.Dense(32,activation='relu'),
-            tf.keras.layers.Dense(6,activation='softmax')
+            tf.keras.layers.Dense(64, activation='relu'),
+            tf.keras.layers.Dense(32, activation='relu'),
+            tf.keras.layers.Dense(6, activation='softmax')
             ])
+
+    model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+                  optimizer=tf.optimizers.Adam(),
+                  metrics=['accuracy'])
+
     model.build((None, nb_words))
     
     return model
@@ -69,14 +73,21 @@ def inference(texts):
     predictions = model.predict(phrase_vector)
     predictions = [round(prediction, 3) for prediction in predictions[0]]
     print(predictions)
-    # Do something with the predictions
-    labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise']  # replace with your actual labels
+
     highest_prediction = np.argmax(predictions)
-    print(labels[highest_prediction])
-    
-text = ["i miss all the others as well that feel that i wronged them and they will soon understand that i didnt",
-        " i feel like i am a burden to everyone and i am not worth anything",
-        "i am so happy today i feel like i am on top of the world",
-        "",]
+    return highest_prediction
+
+labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise'] 
+
 init()
-inference(texts=text[3])
+
+# Charger le fichier CSV
+with open('./dataset/comments.csv', newline='', encoding="utf-8") as csvfile:
+    reader = csv.reader(csvfile)
+    with open('./dataset/comments_with_emotions.csv', 'w', newline='', encoding='utf-8') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(["username", "commentaire", "emotion"])
+        for row in reader:
+            d = inference(texts=row[1])
+            writer.writerow([row[0], row[1], labels[d]])
+            print(f"Texte : {row[1]} -- Prédiction : {d} -- Émotion : {labels[d]}")
