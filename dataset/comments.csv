@@ -1,3 +1,4 @@
+
 @SomethingRandomChannel,thanks so much for this video series Sentdex, I know I'm late to the game but I noticed that you don't normalize the numbers when you make a prediction request. However, when we trained the model we did normalize before handing over the data to fit. I tried normalizing the data before making a prediction and I got rubbish results, when i took the normalization out it worked fine. Why is it that we train on normalized numbers but don't prepare our prediction request data in the same way?
 @luizhenriquedefreitasassis2051,That was really good. Congratulations man!
 @camao4938,hi, thank you so much for these videos, really help me out!
@@ -15,6 +16,12 @@
 @h4dri664,You are the best
 @hieutvm5627,how can I use this model for object detection ?
 @hobbitthegobbit,You are the life saver man and a great lecturer
-@eranfeit,Hi,This is a Python tutorial that walks through, for detecting objects in images and real time video.This tutorial is based on TensorFlow and pre-trained model The link for the video : https://youtu.be/40_NC2Ahs_8 I also shared the Python code in the video description . Enjoy Eran
+@eranfeit,Hi,
+This is a Python tutorial that walks through, for detecting objects in images and real time video.
+This tutorial is based on TensorFlow and pre-trained model
+ The link for the video : https://youtu.be/40_NC2Ahs_8
+ I also shared the Python code in the video description .
+ Enjoy
+ Eran
 @sylus121,Bookmark
 @matancadeporco,i'm wondering if is there a way to calculate the time spent on a trained model? already trained them but i didnt pay attention on the time spent... now i need to know the time spent, should i retrain all of them again?

@@ -4,13 +4,30 @@
     align-items: center;
   }
 
+  .container-card .material-symbols-outlined{
+    margin: 0 15px;
+    font-size: 60px;
+    width: 60px;
+    height:60px;
+  }
+
+  .container-tab .material-symbols-outlined{
+    margin: 0 15px;
+    font-size: 30px;
+    width: 30px;
+    height:30px;
+  }
+
 .container-card{
-    height: 20vh;
     text-align: center;
-    margin-top:50px;
+    margin-top:20px;
+    margin-bottom: 20px;
 }
-img{
-    height: 75px;
+.miniature{
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 .container-tab{
@@ -29,4 +46,25 @@ img{
 
 .avis-negatif:hover{
   color: red;
+}
+
+.container-modal-icones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+}
+
+.container-modal-icones .material-symbols-outlined {
+  margin: 0 15px;
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.dialog-content-container {
+  text-align: center;
 }

@@ -1,23 +1,40 @@
-import { Component } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableModule} from '@angular/material/table';
+import { AfterViewInit, Component, ViewChild, Inject,TemplateRef } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-commentaire',
   standalone: true,
   imports: [
     MatCardModule,
+    CommonModule,
     MatTableModule,
+    MatPaginatorModule,
     MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    FormsModule, 
+    MatDialogContent,
+    MatDialogActions,
     MatButtonModule
+
   ],
   templateUrl: './commentaire.component.html',
   styleUrl: './commentaire.component.css'
 })
+export class CommentaireComponent implements AfterViewInit {
+  displayedColumns: string[] = ['id', 'commentaire', 'sentiment', 'avis'];
+  dataSource = new MatTableDataSource<commentaireElement>(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
+
+  constructor(public dialog: MatDialog) {}
 
 export class CommentaireComponent {
   displayedColumns: string[] = ['username', 'commentaire', 'emotion', 'avis'];
@@ -60,3 +77,4 @@ export class CommentaireComponent {
     }
   }  
 }
+
