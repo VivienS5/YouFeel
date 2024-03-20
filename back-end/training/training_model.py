@@ -1,4 +1,5 @@
 
+import datetime
 import os
 import pickle
 import string
@@ -46,16 +47,23 @@ class ModelTraining():
             bool: True if the dataset is loaded successfully, False otherwise.
         """
         print("=== Loading dataset ===")
+        nb_words = 0
         if self.comments_training == True:
-            data_comments = pds.read_csv(self.path_comments_dataset,sep=",",nrows=self.nb_words,quotechar='"' )
+            data_comments = pds.read_csv(self.path_comments_dataset,sep=",",quotechar='"' )
+            nb_words = data_comments.shape[0]    
             self.data_text = data_comments['text']
             self.data_label = data_comments['label']
             pass
-        else :
-            data_emotions = pds.read_csv(self.path_dataset,sep=",",nrows=self.nb_words )
-            data_emotions.drop('Unnamed: 0', axis=1, inplace=True)
+        data_emotions = pds.read_csv(self.path_dataset,sep=",",nrows=self.nb_words )
+        data_emotions.drop('Unnamed: 0', axis=1, inplace=True)
+        if self.comments_training == False:
             self.data_text = data_emotions['text']
             self.data_label = data_emotions['label']
+        else: 
+            print(type(self.data_text))
+            self.data_text = pds.concat([self.data_text,data_emotions['text']])
+            self.data_label = pds.concat([self.data_label,data_emotions['label']])
+            self.nb_words = nb_words + self.data_text.shape[0]
         
 
     def custom_standardization(self,input_data):
@@ -104,13 +112,8 @@ class ModelTraining():
         return model
     def train(self):
         print("=== Training ===")
-        if os.path.exists(self.path_model) and self.comments_training == True:
-            youFeelModel = self.youFeelModel()
-            youFeelModel.load_weights(self.path_model)
-            youFeelModel.build((None, self.nb_words))
-            pass
-        else:  
-            youFeelModel = self.youFeelModel()
+
+        youFeelModel = self.youFeelModel()
         sequences_train, sequences_val, labels_train, labels_val = train_test_split(
         self.padded_sequences, self.data_label, test_size=0.2, random_state=42)
         try:
@@ -119,7 +122,10 @@ class ModelTraining():
                                validation_data=(sequences_val, labels_val))        
             with open('./back-end/training/models/tokenizer.pickle', 'wb') as handle:
                 pickle.dump(self.tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
-            youFeelModel.save_weights('./back-end/training/models/model_weights.weights.h5')
+            if self.comments_training == False:
+                youFeelModel.save_weights('./back-end/training/models/model_weights.weights.h5')
+            else:
+                youFeelModel.save_weights(self.path_model+"/model_weights_"+datetime.datetime.now().__str__()+".weights.h5")
             self.plot_history(history)
         except Exception as e:
             print(e)
@@ -152,7 +158,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument_group("Training model")
     parser.add_argument("--inference",type=str,default="",help="Text to predict")
-    parser.add_argument("--nb_words",type=int,default=100000)
+    parser.add_argument("--nb_words",type=int,default=10000)
     parser.add_argument("--epoch",type=int,default=10)
     parser.add_argument("--embedding_dim",type=int,default=32)
     parser.add_argument("--comments_training",type=bool,default=False)

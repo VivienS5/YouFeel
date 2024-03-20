@@ -75,6 +75,7 @@ def inference(texts):
     print(predictions)
 
     highest_prediction = np.argmax(predictions)
+
     return highest_prediction
 
 labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise'] 
