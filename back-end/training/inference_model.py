@@ -89,6 +89,10 @@ with open('./dataset/comments.csv', newline='', encoding="utf-8") as csvfile:
         writer = csv.writer(output_file)
         writer.writerow(["username", "commentaire", "emotion"])
         for row in reader:
-            d = inference(texts=row[1])
+            try:
+                d = inference(texts=row[1])
+            except Exception as e:
+                print(f"Erreur lors de l'inférence : {e}")
+                continue
             writer.writerow([row[0], row[1], labels[d]])
             print(f"Texte : {row[1]} -- Prédiction : {d} -- Émotion : {labels[d]}")

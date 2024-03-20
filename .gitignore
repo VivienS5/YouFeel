@@ -2,8 +2,9 @@
 YouFeelEnv/
 back-end/flask/__pycache__/
 back-end/apiKey.py
-dataset/comments.json
 .vscode/
 __pycache__/
 back-end/flask/apiKey.py
 # faire fichier apiKey.py dans le dossier back-end/flask avec secretApiKey = "VotreKeyYoutube" 
+dataset/comments_with_emotions.csv
+dataset/comments.csv
