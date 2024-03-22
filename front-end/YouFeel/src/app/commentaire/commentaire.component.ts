@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-commentaire',
@@ -29,8 +30,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatDialogActions,
     MatButtonModule,
     MatDialogModule,
-
   ],
+  
   templateUrl: './commentaire.component.html',
   styleUrl: './commentaire.component.css'
 })
@@ -38,33 +39,41 @@ import { MatDialog } from '@angular/material/dialog';
 export class CommentaireComponent {
   displayedColumns: string[] = ['username', 'commentaire', 'emotion', 'avis'];
   dataSource: any[] = [];
+  dataVideo: any[] = [];
   commentaires: any[] = []; 
   emotionIcon: string = '';
-
+  youtubeTag: any;
+  titreVideo: string = '';
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
+    this.fetchComm();
     this.fetchData();
-    this.commentaires.forEach(commentaire => {
-      console.log(commentaire.emotion);
-    });
   }
-  fetchData(): void {
+  fetchComm(): void {
     this.http.get<any[]>('http://127.0.0.1:5000/comments/json')
       .subscribe(data => {
         console.log(data);
         this.commentaires = data;
         this.dataSource = this.commentaires;
-        this.emotionIcon = this.commentaires.length > 0 ? this.commentaires[0].emotion : '';
+        this.emotionIcon = this.commentaires.length > 0 ? this.commentaires[0].emotion_prediction : '';
       });
   }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  // }
+  fetchData(): void {
+    this.http.get<any>('http://127.0.0.1:5000/data_video')
+      .subscribe(data => {
+        console.log(data);
+        this.dataVideo = data;
+        this.titreVideo = data.titre;
+        // bypassSecurityTrustResourceUrl evite les problemes xss
+        this.youtubeTag = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + data.tag);
+        
+      });
+  }
 
   openDialog(data:any): void {
     const dialogRef = this.dialog.open(this.dialogContent, {
@@ -78,20 +87,20 @@ export class CommentaireComponent {
 
   getSentimentIcon(emotionIcon: string): string {
     switch(emotionIcon) {
-      case 'joy':
-        return 'sentiment_very_satisfied';
-      case 'anger':
-        return 'sentiment_extremely_dissatisfied';
-      case 'fear':
-        return 'mood_bad';
-      case 'sadness':
-        return 'sentiment_sad';
-      case 'surprise':
-        return 'sentiment_very_dissatisfied';
-      case 'love':
-        return 'volunteer_activism';
+      case "0":
+        return 'sentiment_sad'; //sadness
+      case "1":
+        return 'sentiment_very_satisfied';  //joy
+      case "2":
+        return 'volunteer_activism';  //love
+      case "3":
+        return 'sentiment_extremely_dissatisfied';  //anger
+      case "4":
+        return 'mood_bad';  //fear
+      case "5":
+        return 'sentiment_very_dissatisfied';  //surprise
       default:
-        return '';
+        return 'sentiment_very_satisfied';
     }
   }  
 }

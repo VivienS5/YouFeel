@@ -82,7 +82,6 @@ labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise']
 
 
 def process_comments(commentaires):
-    # Copie temporaire du tableau
     processed_comments = []
     data = {}
     for i, comment_row in enumerate(commentaires): 

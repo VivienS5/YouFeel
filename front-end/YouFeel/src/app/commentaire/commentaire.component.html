@@ -5,11 +5,14 @@
   <div class="container" style="overflow: hidden;">
     <div class="container-card">
       <mat-card>
-        <mat-card-content>
-          <h2>Titre vidéo</h2>
-          <iframe width="500" height="281" src="https://www.youtube.com/embed/-6EMW1yajT0" title="How Much MONEY Do Minecraft Servers Make?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <p class="container-modal-icones"><strong>Sentiment principal :</strong> <span class="material-symbols-outlined">sentiment_extremely_dissatisfied</span></p>
-        </mat-card-content>
+          <mat-card-content>
+            <h2>{{ titreVideo }}</h2>
+            <iframe width="500" height="281" [src]="youtubeTag" frameborder="0" allowfullscreen></iframe>
+            <p class="container-modal-icones">
+              <strong>Sentiment principal :</strong> 
+              <span class="material-symbols-outlined">{{ getSentimentIcon(emotionIcon) }}</span>
+            </p>
+          </mat-card-content>
       </mat-card>
     </div>
 
@@ -40,7 +43,7 @@
           <th mat-header-cell *matHeaderCellDef>Sentiment</th>
           <td mat-cell *matCellDef="let element">
             <!-- Utilisation des icônes mat-icon pour afficher le sentiment -->
-            <mat-icon class="material-symbols-outlined">{{getSentimentIcon(element.emotion)}}</mat-icon>
+            <mat-icon class="material-symbols-outlined">{{getSentimentIcon(element.emotion_prediction)}}</mat-icon>
           </td>
         </ng-container>
 
@@ -82,7 +85,7 @@
       <p><strong>Commentaire:</strong> {{ data.element.commentaire }}</p>
       <div class="container-modal-icones">
         <p><strong>Sentiment actuel :</strong></p>
-        <mat-icon class="material-symbols-outlined">{{ getSentimentIcon(data.element.emotion) }}</mat-icon>
+        <mat-icon class="material-symbols-outlined">{{ getSentimentIcon(data.element.emotion_prediction) }}</mat-icon>
       </div>    
       <div class="container-modal-icones">
         <mat-icon class="material-symbols-outlined">sentiment_excited</mat-icon>

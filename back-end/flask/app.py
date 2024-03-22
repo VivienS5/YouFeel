@@ -50,20 +50,25 @@ def get_video_comments(video_id, max_results=20):
 def upload_File():
     import inference_model
     global commentToJson
+    global titre_video
+    global tag_link
     commentToJson = None
     if request.method == 'POST':
         youtube_link = request.form['youtube_link']
         video_id = re.findall(r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})', youtube_link)
         if video_id:
+            video_details = youtube.videos().list(
+                part="snippet",
+                id=video_id[0]
+            ).execute()
+            tag_link = video_id[0]
+            titre_video = video_details["items"][0]["snippet"]["title"]
             comments_data = get_video_comments(video_id[0])
             if comments_data:
                 commentaires = []
                 for comment in comments_data:
-                    # print(comment, "comment")
                     commentaires.append((comment['username'], comment['commentaire']))
-                    # print(commentaires, "commentaires")
                 commentToJson = inference_model.process_comments(commentaires)
-                # print(commentToJson, "commentToJson")
                 return redirect('http://localhost:4200/commentaire')
                 # return redirect('/comments') pour afficher les commentaires sur le serveur
             else:
@@ -76,10 +81,16 @@ def upload_File():
 @app.route('/comments/json')
 def comments_json():
     global commentToJson
-    # print(commentToJson, "JE SUIS DANS LA ROUTE COMMENT JSON")
     # règle problème d'int64
-    commentToJson = [{'username': item['username'], 'commentaire': item['commentaire'], 'emotion_prediction': item['emotion_prediction']} for item in commentToJson]
+    commentToJson = [{'username': item['username'], 'commentaire': item['commentaire'], 'emotion_prediction': str(item['emotion_prediction'])} for item in commentToJson]
     return jsonify(commentToJson)
+
+@app.route('/data_video')
+def data_video():
+    global titre_video
+    global tag_link
+    return jsonify({"titre":titre_video, "tag": tag_link})
+# manque de récuperer ces données depuis le front pour les affiché 
 
 if __name__ == '__main__':
     app.run(debug=True)
