@@ -90,7 +90,6 @@ def data_video():
     global titre_video
     global tag_link
     return jsonify({"titre":titre_video, "tag": tag_link})
-# manque de récuperer ces données depuis le front pour les affiché 
 
 if __name__ == '__main__':
     app.run(debug=True)
