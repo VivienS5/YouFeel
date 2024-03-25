@@ -72,7 +72,7 @@ def inference(texts):
     # Predict the output
     predictions = model.predict(phrase_vector)
     predictions = [round(prediction, 3) for prediction in predictions[0]]
-    print(predictions)
+    # print(predictions)
 
     highest_prediction = np.argmax(predictions)
 
@@ -80,15 +80,17 @@ def inference(texts):
 
 labels = ['sadness', 'joy', 'love', 'anger', 'fear','surprise'] 
 
-init()
 
-# Charger le fichier CSV
-with open('./dataset/comments.csv', newline='', encoding="utf-8") as csvfile:
-    reader = csv.reader(csvfile)
-    with open('./dataset/comments_with_emotions.csv', 'w', newline='', encoding='utf-8') as output_file:
-        writer = csv.writer(output_file)
-        writer.writerow(["username", "commentaire", "emotion"])
-        for row in reader:
-            d = inference(texts=row[1])
-            writer.writerow([row[0], row[1], labels[d]])
-            print(f"Texte : {row[1]} -- Prédiction : {d} -- Émotion : {labels[d]}")
+def process_comments(commentaires):
+    processed_comments = []
+    data = {}
+    for i, comment_row in enumerate(commentaires): 
+        comment = comment_row[1] 
+        emotion_prediction = inference(comment)
+        emotion_prediction = int(emotion_prediction)
+
+        data = {'username':comment_row[0],'commentaire': comment_row[1], 'emotion_prediction': emotion_prediction}
+        print(data)
+
+        processed_comments.append(data)
+    return processed_comments

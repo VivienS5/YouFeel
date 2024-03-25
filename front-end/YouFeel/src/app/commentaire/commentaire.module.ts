@@ -7,7 +7,7 @@ import { CommentaireComponent } from './commentaire.component';
     CommentaireComponent
   ],
   imports: [
-    CommonModule 
+    CommonModule,
   ],
   exports: [
     CommentaireComponent

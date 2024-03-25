@@ -1,3 +1,5 @@
+import sys
+sys.path.append("back-end/training/")
 from flask import Flask, render_template, redirect, request, jsonify
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -8,15 +10,17 @@ import os
 import csv
 import pandas as pd
 
+
 app = Flask(__name__)
 
 # Clé d'API YouTube
 api_key = secretApiKey
+commentaires = []
 
 # Créer un objet service YouTube
 youtube = build('youtube', 'v3', developerKey=api_key)
 
-# Définir une fonction pour récupérer les commentaires
+# fonction pour récupérer les commentaires
 def get_video_comments(video_id, max_results=20):
     comments_data = []
     try:
@@ -42,75 +46,51 @@ def get_video_comments(video_id, max_results=20):
         print("Une erreur HTTP %d s'est produite:\n%s" % (e.resp.status, e.content))
         return None
 
-@app.route('/', methods=['GET', 'POST']) # Code pour les tests serveur
-def index():
-    if request.method == 'POST':
-        youtube_link = request.form['youtube_link']
-        video_id = re.findall(r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})', youtube_link)
-        if video_id:
-            comments_data = get_video_comments(video_id[0])
-            if comments_data:
-                with open("./dataset/comments.csv", "w", encoding='utf-8') as csv_file:
-                    for comment in comments_data:
-                        csv_file.write(f"{comment['username']},{comment['commentaire']}\n")
-                return redirect('/traitement')
-            else:
-                return "Erreur lors de la récupération des commentaires."
-        else:
-            return "URL YouTube invalide."
-    return render_template('index.html')
-
 @app.route('/upload' , methods = ['GET' ,'POST'])
 def upload_File():
-
+    import inference_model
+    global commentToJson
+    global titre_video
+    global tag_link
+    commentToJson = None
     if request.method == 'POST':
         youtube_link = request.form['youtube_link']
         video_id = re.findall(r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})', youtube_link)
         if video_id:
+            video_details = youtube.videos().list(
+                part="snippet",
+                id=video_id[0]
+            ).execute()
+            tag_link = video_id[0]
+            titre_video = video_details["items"][0]["snippet"]["title"]
             comments_data = get_video_comments(video_id[0])
             if comments_data:
-                with open("./dataset/comments.csv", "w", encoding='utf-8') as csv_file:
-                    for comment in comments_data:
-                        csv_file.write(f"{comment['username']},{comment['commentaire']}\n")
-                return redirect('/traitement')
+                commentaires = []
+                for comment in comments_data:
+                    commentaires.append((comment['username'], comment['commentaire']))
+                commentToJson = inference_model.process_comments(commentaires)
+                return redirect('http://localhost:4200/commentaire')
+                # return redirect('/comments') pour afficher les commentaires sur le serveur
             else:
                 return "Erreur lors de la récupération des commentaires."
         else:
             return "URL YouTube invalide."
     return "Bien reçu l'url"
 
-@app.route('/traitement')
-def traitement():
-    os.system('python ./back-end/training/inference_model.py') 
-    return redirect('http://localhost:4200/commentaire')
-    # return redirect('/comments') pour afficher les commentaires sur le serveur
 
-@app.route('/comments') # Code pour les tests serveur
-def comments():
-    comments = load_comments_from_csv("./dataset/comments_with_emotions.csv")
-    return render_template('comments.html', comments=comments)
-
-def load_comments_from_csv(file_path):
-    comments_data = []
-    with open(file_path, 'r', encoding='utf-8') as csv_file:
-        reader = csv.reader(csv_file)
-        next(reader) 
-        for row in reader:
-            username, commentaire, emotion = row
-            comments_data.append({"username": username, "commentaire": commentaire, "emotion": emotion})
-    return comments_data
-
-@app.route('/comments/json') 
+@app.route('/comments/json')
 def comments_json():
-    # Lecture du fichier CSV
-    df = pd.read_csv('./dataset/comments_with_emotions.csv')
+    global commentToJson
+    # règle problème d'int64
+    commentToJson = [{'username': item['username'], 'commentaire': item['commentaire'], 'emotion_prediction': str(item['emotion_prediction'])} for item in commentToJson]
+    return jsonify(commentToJson)
 
-    # Conversion du DataFrame en JSON
-    data = df.to_dict(orient='records')
-
-    # Retour du JSON
-    return jsonify(data)
-
+@app.route('/data_video')
+def data_video():
+    global titre_video
+    global tag_link
+    return jsonify({"titre":titre_video, "tag": tag_link})
+# manque de récuperer ces données depuis le front pour les affiché 
 
 if __name__ == '__main__':
     app.run(debug=True)
