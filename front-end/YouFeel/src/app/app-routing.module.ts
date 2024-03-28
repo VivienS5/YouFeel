@@ -4,6 +4,7 @@ import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ApiComponent } from './api/api.component';
 import { RecupBackComponent } from './recup-back/recup-back.component';
 import { MockComponent } from './mock/mock.component';
+import { ErreurComponent } from './erreur/erreur.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'api', component: ApiComponent },
   { path: 'recupback', component: RecupBackComponent },
   { path: 'mock', component: MockComponent },
+  { path: 'erreur', component: ErreurComponent },
   { path: '', redirectTo: 'api', pathMatch: 'full' },
 ];
 
