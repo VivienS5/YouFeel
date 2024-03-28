@@ -74,7 +74,7 @@ def upload_File():
             else:
                 return "Erreur lors de la récupération des commentaires."
         else:
-            return "URL YouTube invalide."
+            return redirect('http://localhost:4200/erreur')
     return "Bien reçu l'url"
 
 
